@@ -2,12 +2,9 @@ package com.zhy.market.controller;
 
 import com.zhy.market.domain.Admin;
 import com.zhy.market.mapper.AdminMapper;
-import net.sf.json.JSONObject;
-
 import com.zhy.market.mapper.RsaKeyMapper;
-
+import net.sf.json.JSONObject;
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,30 +13,48 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.crypto.Cipher;
 import javax.servlet.http.HttpServletRequest;
-
+import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.spec.PKCS8EncodedKeySpec;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @RequestMapping("admin")
 @RestController
 public class AdminController {
-    @Autowired
-    private AdminMapper adminMapper;
+    private final AdminMapper adminMapper;
 
     @Resource
     private RsaKeyMapper rsaKeyMapper;
 
+    public AdminController(AdminMapper adminMapper) {
+        this.adminMapper = adminMapper;
+    }
+
     @PostMapping("adminLogin")
-    public Object adminLogin(HttpServletRequest request, HttpServletRequest response, @RequestBody Admin userLoginInfo)
+    public Object adminLogin(@RequestBody Admin userLoginInfo)
             throws Exception {
         String userName = userLoginInfo.userName;
         String passWord = userLoginInfo.passWord;
+        System.out.println(userName);
+        List<Admin> list = adminMapper.adminLogin(userName);
+        JSONObject json = new JSONObject();
+        if (list.isEmpty()) {
+            json.put("code", "1");
+            json.put("msg", "用户不存在");
+            return json;
+        }
+        Object info = list.get(0);
+
 
         String privateKey = rsaKeyMapper.getPrivateKey();
         // 64位解码加密后的字符串
-        byte[] inputByte = Base64.decodeBase64(passWord.getBytes("UTF-8"));
+        byte[] sentPassWord = Base64.decodeBase64(passWord.getBytes(StandardCharsets.UTF_8));
+        byte[] getPassWord = Base64.decodeBase64(((String) Objects.requireNonNull(getFieldValueByName("passWord", info))).getBytes(StandardCharsets.UTF_8));
         // base64编码的私钥
         byte[] decoded = Base64.decodeBase64(privateKey);
 
@@ -49,21 +64,51 @@ public class AdminController {
         // RSA解密
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.DECRYPT_MODE, priKey);
-        String outStr = new String(cipher.doFinal(inputByte));
-        System.out.println(userName);
-        System.out.println(outStr);
+        String outSentPassWord = new String(cipher.doFinal(sentPassWord));
+        String outGetPassWord = new String(cipher.doFinal(getPassWord));
 
-        JSONObject json = new JSONObject();
+        List<String> fields = new ArrayList<>();
+        fields.add("adminId");
+        fields.add("adminRole");
+        fields.add("adminUUid");
+        fields.add("emailAddress");
+        fields.add("phoneNumber");
+        fields.add("userName");
+
+        if (outGetPassWord.equals(outSentPassWord)) {
+            json.put("code", "0");
+            json.put("msg", "登陆成功");
+            JSONObject data = new JSONObject();
+            for (String x : fields) {
+                data.put(x, Objects.requireNonNull(getFieldValueByName(x, info)));
+            }
+            json.put("data", data);
+        } else {
+            json.put("code", "1");
+            json.put("msg", "密码错误");
+        }
         return json;
     }
 
+    private Object getFieldValueByName(String fieldName, Object o) {
+        try {
+            String firstLetter = fieldName.substring(0, 1).toUpperCase();
+            String getter = "get" + firstLetter + fieldName.substring(1);
+            Method methodG = o.getClass().getMethod(getter);
+//            Method methodS = o.getClass().getMethod(setter, new Class[]{});
+            return methodG.invoke(o);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     @PostMapping("adminRegis")
-    public Object adminRegis(HttpServletRequest request, HttpServletRequest response, @RequestBody Admin userRegisInfo)
-            throws Exception {
+    public Object adminRegis(HttpServletRequest ignoredRequest, @RequestBody Admin userRegisInfo) {
         String pin = userRegisInfo.pin;
         String userName = userRegisInfo.userName;
+        System.out.println(pin);
 
-        if (pin != "574601**") {
+        if (!Objects.equals(pin, "574601**")) {
             JSONObject json = new JSONObject();
             json.put("code", "1");
             json.put("msg", "pin码错误");
@@ -73,9 +118,7 @@ public class AdminController {
             json.put("code", "1");
             json.put("msg", "用户名已存在");
             return json;
-        }
-
-        else {
+        } else {
             String passWord = userRegisInfo.passWord;
             String emailAddress = userRegisInfo.emailAddress;
             String phoneNumber = userRegisInfo.phoneNumber;
