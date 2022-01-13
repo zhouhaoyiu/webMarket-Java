@@ -1,5 +1,6 @@
 package com.zhy.market.mapper;
 
+import com.zhy.market.domain.AdminInfo;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -13,7 +14,7 @@ import com.zhy.market.domain.Admin;
 @Repository
 public interface AdminMapper {
     @Select("select userName,emailAddress,adminUUid,phoneNumber,adminRole from admin")
-    List<Admin> getAllAdminsInfo();
+    List<AdminInfo> getAllAdminsInfo();
 
     @Delete("delete from admin where adminUUid = #{adminUUid}")
     Integer deleteAdmin(String adminUUid);

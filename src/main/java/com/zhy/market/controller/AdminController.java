@@ -5,10 +5,7 @@ import com.zhy.market.mapper.AdminMapper;
 import com.zhy.market.mapper.RsaKeyMapper;
 import net.sf.json.JSONObject;
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.crypto.Cipher;
@@ -106,7 +103,6 @@ public class AdminController {
     public Object adminRegis(HttpServletRequest ignoredRequest, @RequestBody Admin userRegisInfo) {
         String pin = userRegisInfo.pin;
         String userName = userRegisInfo.userName;
-        System.out.println(pin);
 
         if (!Objects.equals(pin, "574601**")) {
             JSONObject json = new JSONObject();
@@ -136,4 +132,36 @@ public class AdminController {
         }
     }
 
+    @GetMapping("getAllAdminsInfo")
+    public Object getAllAdminsInfo(HttpServletRequest request) {
+        int role = Integer.parseInt(request.getParameter("adminRole"));
+
+        List adminList = adminMapper.getAllAdminsInfo();
+        JSONObject json = new JSONObject();
+        if (role == 0) {
+            json.put("code", "0");
+            json.put("data", adminList);
+        }
+
+        return json;
+    }
+
+    @GetMapping ("deleteAdmin")
+    public Object deleteAdmin(HttpServletRequest request) {
+        String adminUUid = request.getParameter("adminUUid");
+
+        int deleteCount = adminMapper.deleteAdmin(adminUUid);
+
+        JSONObject json = new JSONObject();
+        if (deleteCount == 1) {
+            json.put("code", "0");
+            json.put("data", deleteCount);
+            json.put("msg", "删除成功");
+        } else {
+            json.put("code", "1");
+            json.put("data", deleteCount);
+            json.put("msg", "删除失败");
+        }
+        return json;
+    }
 }

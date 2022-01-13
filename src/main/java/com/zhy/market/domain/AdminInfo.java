@@ -3,20 +3,10 @@ package com.zhy.market.domain;
 import lombok.Data;
 
 @Data
-public class Admin {
-    public Integer adminId;
+public class AdminInfo {
     public String userName;
-    public String passWord;
     public String adminUUid;
     public String phoneNumber;
-
-    public Integer getAdminId() {
-        return adminId;
-    }
-
-    public void setAdminId(Integer adminId) {
-        this.adminId = adminId;
-    }
 
     public String getUserName() {
         return userName;
@@ -24,14 +14,6 @@ public class Admin {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public String getPassWord() {
-        return passWord;
-    }
-
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
     }
 
     public String getAdminUUid() {
@@ -66,16 +48,6 @@ public class Admin {
         this.adminRole = adminRole;
     }
 
-    public String getPin() {
-        return pin;
-    }
-
-    public void setPin(String pin) {
-        this.pin = pin;
-    }
-
     public String emailAddress;
     public Integer adminRole;
-    public String pin;
 }
-
