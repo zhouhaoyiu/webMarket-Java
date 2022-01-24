@@ -65,6 +65,7 @@ public class AdminController {
         String outGetPassWord = new String(cipher.doFinal(getPassWord));
 
         List<String> fields = new ArrayList<>();
+
         fields.add("adminId");
         fields.add("adminRole");
         fields.add("adminUUid");
