@@ -30,6 +30,7 @@ public class GoodsController {
             json.put("code", 0);
             json.put("msg", "上传成功");
             json.put("data", path + "/" + fileName);
+            System.out.println(path + "/" + fileName);
 
         } catch (Exception e) {
             e.printStackTrace();
