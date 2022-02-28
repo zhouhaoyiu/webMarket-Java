@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class MarketInfo {
-    private String marketName;
-    private String marketRecommend;
-    private String marketMeta;
+    public String marketName;
+    public String marketRecommend;
+    public String marketMeta;
 }
