@@ -1,14 +1,12 @@
 package com.zhy.market.controller;
 
 import net.sf.json.JSONObject;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.util.UUID;
 
 @RequestMapping("goods")
 @RestController
@@ -22,14 +20,15 @@ public class GoodsController {
         if (!filePath.exists()) {
             filePath.mkdirs();
         }
-        String fileName = picture.getOriginalFilename();
-        File file = new File(path, fileName);
+
+        File file = new File(path, String.valueOf(UUID.randomUUID()) + ".jpg");
+        String fileName = file.getName();
         JSONObject json = new JSONObject();
         try {
             picture.transferTo(file);
             json.put("code", 0);
             json.put("msg", "上传成功");
-            json.put("data", path + "/" + fileName);
+            json.put("data",fileName);
             System.out.println(path + "/" + fileName);
 
         } catch (Exception e) {
@@ -38,5 +37,10 @@ public class GoodsController {
             json.put("msg", "上传失败");
         }
         return json;
+    }
+
+    @PostMapping("addGoods")
+    public Object addGoods() {
+        return null;
     }
 }
