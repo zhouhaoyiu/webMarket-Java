@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("goodsClassification")
-public class GoodsclassificationController {
+public class GoodsClassificationController {
 
     @Resource
     private GoodsClassificationMapper goodsClassificationMapper;

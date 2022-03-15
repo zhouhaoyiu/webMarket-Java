@@ -1,6 +1,7 @@
 package com.zhy.market.controller;
 
 import com.zhy.market.domain.Admin;
+import com.zhy.market.domain.AdminInfo;
 import com.zhy.market.mapper.AdminMapper;
 import com.zhy.market.mapper.RsaKeyMapper;
 import net.sf.json.JSONObject;
@@ -137,7 +138,7 @@ public class AdminController {
     public Object getAllAdminsInfo(HttpServletRequest request) {
         int role = Integer.parseInt(request.getParameter("adminRole"));
 
-        List adminList = adminMapper.getAllAdminsInfo();
+        List<AdminInfo> adminList = adminMapper.getAllAdminsInfo();
         JSONObject json = new JSONObject();
         if (role == 0) {
             json.put("code", "0");
