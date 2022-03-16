@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class GoodsClassification {
-    Integer classificationId;
-    String classificationName;
-    Integer parentId;
+    public Integer classificationId;
+    public String classificationName;
+    public Integer parentId;
 }

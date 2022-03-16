@@ -3,6 +3,7 @@ package com.zhy.market.controller;
 import com.zhy.market.domain.Goods;
 import com.zhy.market.mapper.GoodsMapper;
 import net.sf.json.JSONObject;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -66,5 +67,19 @@ public class GoodsController {
         JSONObject json = new JSONObject();
         json.put("data", list);
         return json;
+    }
+
+    @GetMapping("deleteGoodsById")
+    public Object deleteGoods(@Param("id") Integer goodId) {
+        Integer result = goodsMapper.deleteGood(goodId);
+        JSONObject json = new JSONObject();
+        if (result > 0) {
+            json.put("code", 0);
+            json.put("msg", "删除成功");
+        } else {
+            json.put("code", 1);
+            json.put("msg", "删除失败");
+        }
+        return null;
     }
 }
