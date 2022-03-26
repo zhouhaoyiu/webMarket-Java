@@ -49,7 +49,7 @@ public class GoodsController {
 
     @PostMapping("addGoods")
     public Object addGoods(@RequestBody Goods good) {
-        Integer result = goodsMapper.addGood(good.goodName, good.goodClassification, good.goodPrice, good.goodCount, good.goodImages, good.goodDescribeImages);
+        Integer result = goodsMapper.addGood(good.getGoodName(), good.getGoodClassification(), good.getGoodPrice(), good.getGoodCount(), good.getGoodImages(), good.getGoodDescribeImages());
         JSONObject json = new JSONObject();
         if (result > 0) {
             json.put("code", 0);

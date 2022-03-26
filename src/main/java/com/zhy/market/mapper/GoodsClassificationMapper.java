@@ -2,6 +2,7 @@ package com.zhy.market.mapper;
 
 
 import com.zhy.market.domain.GoodsClassification;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -17,4 +18,10 @@ public interface GoodsClassificationMapper {
 
     @Select("select * from goodsclassification")
     List<GoodsClassification> getAllGoodsClassification();
+
+    @Select("select count(*) from goodsclassification where classficicationId = #{Id}")
+    Integer checkIdExist(@Param("id")Integer id);
+
+    @Delete("delete")
+    Integer deleteGoodsClassification(@Param("id")Integer id);
 }
