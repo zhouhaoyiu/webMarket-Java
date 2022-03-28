@@ -7,6 +7,8 @@ public class AdminInfo {
     public String userName;
     public String adminUUid;
     public String phoneNumber;
+    public String emailAddress;
+    public Integer adminRole;
 
     public String getUserName() {
         return userName;
@@ -48,6 +50,5 @@ public class AdminInfo {
         this.adminRole = adminRole;
     }
 
-    public String emailAddress;
-    public Integer adminRole;
+
 }

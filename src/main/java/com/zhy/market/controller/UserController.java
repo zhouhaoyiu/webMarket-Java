@@ -1,18 +1,52 @@
 package com.zhy.market.controller;
 
-
+import com.zhy.market.domain.User;
+import com.zhy.market.mapper.UserMapper;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.UUID;
+
+import static com.zhy.market.controller.utils.getJsonRes;
 
 @RestController
 @RequestMapping("user")
 public class UserController {
 
-    @PostMapping("login")
-    public Object userLogin(){
-        return null;
+    @Resource
+    private UserMapper userMapper;
 
+    @PostMapping("login")
+    public Object userLogin(@RequestBody User userLoginInfo) {
+        String username = userLoginInfo.getUsername();
+        String password = userLoginInfo.getPassword();
+
+        List<User> list = userMapper.userLogin(username);
+        if (list.isEmpty()) {
+            return getJsonRes(1, "登录失败", null);
+        }
+        return getJsonRes(0, "登录成功", list);
+
+    }
+
+    @PostMapping("userRegis")
+    public Object userRegis(@RequestBody User user) {
+
+        String username = user.getUsername();
+        String password = user.getPassword();
+        String address = user.getAddres();
+        Integer phonenumber = user.getPhonenumber();
+        UUID useruuid = UUID.randomUUID();
+
+        Integer result = userMapper.userRegis(username, password, address, phonenumber, useruuid.toString());
+        if (result > 1) {
+            return getJsonRes(0, "注册成功", null);
+        }
+        return getJsonRes(1, "注册失败", null);
     }
 
 }

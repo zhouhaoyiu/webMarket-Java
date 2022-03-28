@@ -38,7 +38,7 @@ public class AdminController {
             throws Exception {
         String userName = userLoginInfo.userName;
         String passWord = userLoginInfo.passWord;
-        System.out.println(userName);
+
         List<Admin> list = adminMapper.adminLogin(userName);
         JSONObject json = new JSONObject();
         if (list.isEmpty()) {

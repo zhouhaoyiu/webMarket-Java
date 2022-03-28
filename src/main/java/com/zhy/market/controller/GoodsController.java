@@ -82,4 +82,8 @@ public class GoodsController {
         }
         return null;
     }
+    @GetMapping("getGoodsImages")
+    public File goodsImages(HttpServletRequest request){
+        return null;
+    }
 }
