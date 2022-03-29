@@ -8,8 +8,8 @@ public class User {
     public String useruuid;
     public String username;
     public String password;
-
-    public String addres;
-    public Integer phonenumber;
+    public Boolean gender;
+    public String address;
+    public String phonenumber;
 
 }

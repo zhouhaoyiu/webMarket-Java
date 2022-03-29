@@ -11,11 +11,11 @@ import java.util.List;
 @Repository
 public interface UserMapper {
 
-    @Select("select * from user where username=#{userName}")
-    List<User> userLogin(@Param("userName") String userName);
+    @Select("select * from user where username=#{username} and password=#{password}")
+    List<User> userLogin(@Param("username") String username,@Param("password")String password);
 
-    @Insert("insert into user(username,password) values(#{username},#{password} )")
-    Integer userRegis(@Param("username") String username, @Param("password") String password, @Param("address") String address, @Param("phonenumber") Integer phonenumber, @Param("useruuid") String useruuid);
+    @Insert("insert into user(username,password,address,phonenumber,useruuid,gender) values(#{username},#{password},#{address},#{phonenumber},#{useruuid},#{gender} )")
+    Integer userRegis(@Param("username") String username, @Param("password") String password, @Param("gender") Boolean gender, @Param("address") String address, @Param("phonenumber") String phonenumber, @Param("useruuid") String useruuid);
 
 //    List<User> userLogin(String username);
 }

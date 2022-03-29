@@ -25,7 +25,9 @@ public class UserController {
         String username = userLoginInfo.getUsername();
         String password = userLoginInfo.getPassword();
 
-        List<User> list = userMapper.userLogin(username);
+        System.out.println(username);
+        System.out.println(password);
+        List<User> list = userMapper.userLogin(username, password);
         if (list.isEmpty()) {
             return getJsonRes(1, "登录失败", null);
         }
@@ -38,12 +40,13 @@ public class UserController {
 
         String username = user.getUsername();
         String password = user.getPassword();
-        String address = user.getAddres();
-        Integer phonenumber = user.getPhonenumber();
+        String address = user.getAddress();
+        String phonenumber = user.getPhonenumber();
+        Boolean gender = user.getGender();
         UUID useruuid = UUID.randomUUID();
 
-        Integer result = userMapper.userRegis(username, password, address, phonenumber, useruuid.toString());
-        if (result > 1) {
+        Integer result = userMapper.userRegis(username, password, gender, address, phonenumber, useruuid.toString());
+        if (result > 0) {
             return getJsonRes(0, "注册成功", null);
         }
         return getJsonRes(1, "注册失败", null);
