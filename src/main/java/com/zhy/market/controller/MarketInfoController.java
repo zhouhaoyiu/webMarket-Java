@@ -28,7 +28,12 @@ public class MarketInfoController {
 
     @PostMapping("setMarketInfo")
     public Object setMarketInfo(@RequestBody MarketInfo marketInfo){
+        String marketName = marketInfo.getMarketName();
+        String marketRecommend = marketInfo.getMarketRecommend();
+        String marketMeta = marketInfo.getMarketMeta();
+        String marketImages = marketInfo.getMarketImages();
 
+        Integer res = marketInfoMapper.setMarketInfo(marketName,marketRecommend,marketMeta,marketImages);
         return null;
     }
 

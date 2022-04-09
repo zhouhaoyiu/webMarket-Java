@@ -7,4 +7,5 @@ public class MarketInfo {
     public String marketName;
     public String marketRecommend;
     public String marketMeta;
+    public String marketImages;
 }
