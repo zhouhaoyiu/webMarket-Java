@@ -1,6 +1,7 @@
 package com.zhy.market.controller;
 
 import com.zhy.market.domain.User;
+import com.zhy.market.domain.UserInfo;
 import com.zhy.market.mapper.UserMapper;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class UserController {
 
         System.out.println(username);
         System.out.println(password);
-        List<User> list = userMapper.userLogin(username, password);
+        List<UserInfo> list = userMapper.userLogin(username, password);
         if (list.isEmpty()) {
             return getJsonRes(1, "登录失败", null);
         }

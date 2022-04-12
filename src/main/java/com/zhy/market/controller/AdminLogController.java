@@ -2,6 +2,7 @@ package com.zhy.market.controller;
 
 import com.zhy.market.domain.AdminLog;
 import com.zhy.market.mapper.AdminLogMapper;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -17,7 +18,7 @@ public class AdminLogController {
     private AdminLogMapper adminLogMapper;
 
     @PostMapping("addAdminLog")
-    public Object addAdminLog(@RequestBody AdminLog adminLog) {
+    public Object addAdminLog(@RequestBody @NotNull AdminLog adminLog) {
         String adminLogUUid = adminLog.getAdminLogUUid();
         String adminUUid = adminLog.getAdminUUid();
         String logTime = adminLog.getLogTime();

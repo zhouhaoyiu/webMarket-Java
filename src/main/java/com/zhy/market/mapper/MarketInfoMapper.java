@@ -15,5 +15,5 @@ public interface MarketInfoMapper {
     List<MarketInfo> getMarketInfo();
 
     @Update("update marketInfo set marketName = #{marketName},marketRecommend = #{marketRecommend},marketMeta = #{marketMeta},marketImages=#{marketImages} ")
-    int setMarketInfo(@Param("marketName") String marketName, @Param("marketRecommend") String marketRecommend, @Param("marketMeta") String marketMeta, @Param("maretImages") String marketImages);
+    int setMarketInfo(@Param("marketName") String marketName, @Param("marketRecommend") String marketRecommend, @Param("marketMeta") String marketMeta, @Param("marketImages") String marketImages);
 }

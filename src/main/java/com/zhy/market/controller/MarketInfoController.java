@@ -34,7 +34,7 @@ public class MarketInfoController {
         String marketImages = marketInfo.getMarketImages();
 
         Integer res = marketInfoMapper.setMarketInfo(marketName,marketRecommend,marketMeta,marketImages);
-        return null;
+        return res;
     }
 
 }
