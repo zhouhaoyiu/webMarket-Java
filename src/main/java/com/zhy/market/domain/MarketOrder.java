@@ -3,11 +3,11 @@ package com.zhy.market.domain;
 import lombok.Data;
 
 @Data
-public class Order {
+public class MarketOrder {
     public Integer orderid;
     public String orderdate;
-    public Integer goodid;
-    public Integer ordernumber;
+    public String goods;
+    public Integer orderStatus;
     public String useruuid;
     public String username;
 }
