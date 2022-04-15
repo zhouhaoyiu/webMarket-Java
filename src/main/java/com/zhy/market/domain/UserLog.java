@@ -12,7 +12,7 @@ public class UserLog {
      *
      */
     Integer logid;
-    String useruuid;
+    Integer userid;
     String type;
     Integer gid;
     String logdate;

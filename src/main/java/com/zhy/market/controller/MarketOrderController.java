@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.UUID;
 
 import static com.zhy.market.controller.utils.getJsonRes;
 
@@ -26,20 +27,28 @@ public class MarketOrderController {
     }
 
     @PostMapping("createOrder")
-    public Object createOrder(@RequestBody MarketOrder order)
-    {
-        Integer res = marketOrderMapper.createOrder(order);
-        if(res > 0 ){
-            getJsonRes(1, "创建订息成功", null);
+    public Object createOrder(@RequestBody MarketOrder order) {
+        String orderdate = order.getOrderdate();
+        String goods = order.getGoods();
+        Integer orderStatus = order.getOrderStatus();
+        String useruuid = order.getUseruuid();
+        String username = order.getUsername();
+        UUID orderuuid = UUID.randomUUID();
+        Integer res = marketOrderMapper.createOrder(String.valueOf(orderuuid), orderdate, goods, orderStatus, useruuid, username);
+        if (res > 0) {
+            return getJsonRes(1, "创建订息成功", null);
         }
-        return  getJsonRes(0, "创建订息失败", null);;
+        return getJsonRes(0, "创建订息失败", null);
     }
 
     @GetMapping("setOrderStatus")
-    public Object setOrderStatus(HttpServletRequest request ){
-        Integer orderStatus = Integer.valueOf(request.getParameter("orderStatus"));
-        if(orderStatus == 1){
+    public Object setOrderStatus(HttpServletRequest request) {
+        int orderStatus = Integer.parseInt(request.getParameter("orderStatus"));
+        if (orderStatus == 1) {
             String refuseReason = request.getParameter("refuseReason");
+        }
+        if (orderStatus == 2) {
+            String remarks = request.getParameter("remarks");
         }
         return null;
     }
