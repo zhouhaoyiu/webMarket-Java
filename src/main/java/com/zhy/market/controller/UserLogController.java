@@ -15,9 +15,14 @@ public class UserLogController {
     @Resource
     private UserLogMapper userLogMapper;
 
+    /**
+     * TODO
+     * 增加用户日志的接口
+     * p
+     * */
     @PostMapping("addUserLog")
     public Object addUserLog(@RequestBody UserLog userLog) {
-        Integer userUUid = Integer.valueOf(userLog.getUseruuid());
+        Integer userid = Integer.valueOf(userLog.getUserid());
         String logDate = userLog.getLogdate();
 
         Integer res = userLogMapper.addUserLog();

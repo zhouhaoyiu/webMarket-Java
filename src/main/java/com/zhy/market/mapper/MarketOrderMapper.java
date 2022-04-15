@@ -14,6 +14,6 @@ public interface MarketOrderMapper {
     @Select("select * from marketOrder")
     List<MarketOrder> getAllOrder();
 
-    @Insert("insert into marketOrder(useruuid,orderDate,goods,orderStatus,useruuid,username) values(#{useruuid},#{orderDate},#{goods},#{orderStatus},#{useruuid},#{username})")
-    Integer createOrder(@Param("orderuuid") String orderuuid, @Param("orderDate") String orderdate, @Param("goods") String goods, @Param("orderStatus") Integer orderStatus, @Param("useruuid") String useruuid, @Param("username") String username);
+    @Insert("insert into marketOrder(orderuuid,orderDate,orderaddress,goods,orderStatus,useruuid,username) values(#{orderuuid},#{orderDate},#{orderaddress},#{goods},#{orderStatus},#{useruuid},#{username})")
+    Integer createOrder(@Param("orderuuid") String orderuuid, @Param("orderDate") String orderdate, @Param("orderaddress") String orderaddress, @Param("goods") String goods, @Param("orderStatus") Integer orderStatus, @Param("useruuid") String useruuid, @Param("username") String username);
 }

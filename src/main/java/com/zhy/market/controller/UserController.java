@@ -23,8 +23,6 @@ public class UserController {
         String username = userLoginInfo.getUsername();
         String password = userLoginInfo.getPassword();
 
-        System.out.println(username);
-        System.out.println(password);
         List<UserInfo> list = userMapper.userLogin(username, password);
         if (list.isEmpty()) {
             return getJsonRes(1, "登录失败", null);

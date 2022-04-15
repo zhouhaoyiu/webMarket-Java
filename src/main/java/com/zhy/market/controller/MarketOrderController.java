@@ -33,8 +33,9 @@ public class MarketOrderController {
         Integer orderStatus = order.getOrderStatus();
         String useruuid = order.getUseruuid();
         String username = order.getUsername();
+        String orderaddress = order.getOrderaddress();
         UUID orderuuid = UUID.randomUUID();
-        Integer res = marketOrderMapper.createOrder(String.valueOf(orderuuid), orderdate, goods, orderStatus, useruuid, username);
+        Integer res = marketOrderMapper.createOrder(String.valueOf(orderuuid), orderdate, orderaddress, goods, orderStatus, useruuid, username);
         if (res > 0) {
             return getJsonRes(1, "创建订息成功", null);
         }

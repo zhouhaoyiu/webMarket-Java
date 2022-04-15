@@ -7,6 +7,7 @@ public class MarketOrder {
     public Integer orderid;
     public String orderuuid;
     public String orderdate;
+    public String orderaddress;
     public String goods;
     public Integer orderStatus;
     public String useruuid;
