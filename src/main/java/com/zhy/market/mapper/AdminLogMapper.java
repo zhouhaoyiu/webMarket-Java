@@ -17,4 +17,7 @@ public interface AdminLogMapper {
 
     @Select("select * from adminLog")
     List<AdminLog> getAllAdminLog();
+
+    @Select("select * from adminLog where adminUUid = #{adminUUid}")
+    List<AdminLog> getAdminLogByAdminUUid(@Param("adminUUid")String adminUUid);
 }

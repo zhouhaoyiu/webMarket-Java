@@ -53,4 +53,13 @@ public class MarketOrderController {
         }
         return null;
     }
+
+    @GetMapping("getOrderByUserName")
+    public Object getOrderByUserName(@RequestParam String useruuid) {
+        List<MarketOrder> marketOrderByUserName = marketOrderMapper.getOrderByUserName(useruuid);
+        if (marketOrderByUserName != null) {
+            return getJsonRes(1, "获取成功", marketOrderByUserName);
+        }
+        return getJsonRes(0, "获取失败", null);
+    }
 }

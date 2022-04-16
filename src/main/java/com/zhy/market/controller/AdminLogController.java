@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.UUID;
 
 import static com.zhy.market.controller.utils.getJsonRes;
 
@@ -19,7 +20,7 @@ public class AdminLogController {
 
     @PostMapping("addAdminLog")
     public Object addAdminLog(@RequestBody @NotNull AdminLog adminLog) {
-        String adminLogUUid = adminLog.getAdminLogUUid();
+        String adminLogUUid = String.valueOf(UUID.randomUUID());
         String adminUUid = adminLog.getAdminUUid();
         String logTime = adminLog.getLogTime();
 
@@ -35,5 +36,11 @@ public class AdminLogController {
     public Object getAllAdminLog() {
         List<AdminLog> adminLogs = adminLogMapper.getAllAdminLog();
         return getJsonRes(1, "获得管理员日志成功", adminLogs);
+    }
+
+    @GetMapping("getAdminLogByAdminUUid")
+    public Object getAdminLogByAdminUUid(@RequestParam String adminUUid){
+        List<AdminLog> adminLogs = adminLogMapper.getAdminLogByAdminUUid(adminUUid);
+        return  getJsonRes(1, "获得管理员日志成功", adminLogs);
     }
 }

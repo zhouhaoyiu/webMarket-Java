@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.UUID;
 
 import static com.zhy.market.controller.utils.getJsonRes;
 
@@ -15,17 +16,15 @@ public class UserLogController {
     @Resource
     private UserLogMapper userLogMapper;
 
-    /**
-     * TODO
-     * 增加用户日志的接口
-     * p
-     * */
     @PostMapping("addUserLog")
     public Object addUserLog(@RequestBody UserLog userLog) {
+        String loguuid = String.valueOf(UUID.randomUUID());
         Integer userid = Integer.valueOf(userLog.getUserid());
-        String logDate = userLog.getLogdate();
+        String type = userLog.getType();
+        Integer gid = userLog.getGid();
+        String logtime = userLog.getLogtime();
 
-        Integer res = userLogMapper.addUserLog();
+        Integer res = userLogMapper.addUserLog(loguuid, userid, type, gid, logtime);
         if (res > 0) {
             return getJsonRes(0, "添加访问日志成功", null);
         }

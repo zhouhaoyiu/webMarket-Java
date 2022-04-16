@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface UserLogMapper {
     @Insert("insert into userLog")
-    Integer addUserLog();
+    Integer addUserLog(String loguuid, Integer userid, String type, Integer gid, String logtime);
 
     @Select("select * from userLog")
     List<UserLog> getAllUserLog();
