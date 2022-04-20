@@ -19,8 +19,8 @@ public interface GoodsClassificationMapper {
     @Select("select * from goodsclassification")
     List<GoodsClassification> getAllGoodsClassification();
 
-    @Select("select count(*) from goodsclassification where classficicationId = #{Id}")
-    Integer checkIdExist(@Param("id")Integer id);
+    @Select("select count(*) from goodsclassification where classificationId = #{parentId}")
+    Integer checkIdExist(@Param("parentId")Integer parentId);
 
     @Delete("delete")
     Integer deleteGoodsClassification(@Param("id")Integer id);
