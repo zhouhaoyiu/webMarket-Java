@@ -4,6 +4,7 @@ import com.zhy.market.domain.MarketOrder;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,4 +21,9 @@ public interface MarketOrderMapper {
     @Select("select * from marketOrder where useruuid=#{useruuid}")
     List<MarketOrder> getOrderByUserName(@Param("useruuid") String useruuid);
 
+    @Update("update marketorder set orderStatus = 2 , remarks = #{remarks} where orderuuid = #{orderuuid} ")
+    Integer acceptOrder(@Param("orderStatus") Integer orderStatus, @Param("remarks") String remarks, @Param("orderuuid") String orderuuid);
+
+    @Update("update marketorder set orderStatus = 1 , refuseReason = #{refuseReason} where orderuuid = #{orderuuid}")
+    Integer refuseOrder(@Param("orderStatus") Integer orderStatus, @Param("refuseReason") String refuseReason, @Param("orderuuid") String orderuuid);
 }

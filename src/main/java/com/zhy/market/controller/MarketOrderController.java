@@ -2,7 +2,10 @@ package com.zhy.market.controller;
 
 
 import com.zhy.market.domain.MarketOrder;
+import com.zhy.market.mapper.GoodsMapper;
 import com.zhy.market.mapper.MarketOrderMapper;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -16,8 +19,11 @@ import static com.zhy.market.controller.utils.getJsonRes;
 @RequestMapping("order")
 public class MarketOrderController {
 
-    @Resource()
+    @Resource
     private MarketOrderMapper marketOrderMapper;
+    @Resource
+    private GoodsMapper goodsMapper;
+
 
     @GetMapping("getAllOrder")
     public Object getAllOrder() {
@@ -45,13 +51,39 @@ public class MarketOrderController {
     @GetMapping("setOrderStatus")
     public Object setOrderStatus(HttpServletRequest request) {
         int orderStatus = Integer.parseInt(request.getParameter("orderStatus"));
+        String orderuuid = request.getParameter("orderuuid");
+        boolean flag = false;
+
         if (orderStatus == 1) {
             String refuseReason = request.getParameter("refuseReason");
+            marketOrderMapper.refuseOrder(orderStatus, refuseReason, orderuuid);
+            flag = true;
         }
+
         if (orderStatus == 2) {
             String remarks = request.getParameter("remarks");
+            String orderGoodsStr = request.getParameter("orderGoods");
+            JSONArray orderGoodJson = JSONArray.fromObject(orderGoodsStr);
+
+            for (int i = 0; i < orderGoodJson.size(); i++) {
+                JSONObject json = (JSONObject) orderGoodJson.get(i);
+                Integer orderGoodsNumber = (Integer) json.get("orderGoodsNumber");
+                Integer goodId = (Integer) json.get("goodId");
+                if ((goodsMapper.getGoodCountById(goodId) - orderGoodsNumber) > 0) {
+                    Integer minusGoodCount = goodsMapper.minusGoodCount(goodId, orderGoodsNumber);
+                    Integer updateSellCount = goodsMapper.addGoodSellCount(goodId, orderGoodsNumber);
+                    if (minusGoodCount > 0 && updateSellCount > 0) {
+                        flag = true;
+                    }
+                }
+            }
+            Integer res = marketOrderMapper.acceptOrder(orderStatus, remarks, orderuuid);
+            System.out.println(res);
         }
-        return null;
+
+        if (flag) {
+            return getJsonRes(1, "修改状态成功", null);
+        } else return getJsonRes(0, "修改状态失败", null);
     }
 
     @GetMapping("getOrderByUserName")

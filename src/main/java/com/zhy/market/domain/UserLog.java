@@ -13,7 +13,16 @@ public class UserLog {
      */
     Integer logid;
     String loguuid;
-    Integer userid;
+
+    public String getUseruuid() {
+        return useruuid;
+    }
+
+    public void setUseruuid(String useruuid) {
+        this.useruuid = useruuid;
+    }
+
+    String useruuid;
 
     public Integer getLogid() {
         return logid;
@@ -31,13 +40,7 @@ public class UserLog {
         this.loguuid = loguuid;
     }
 
-    public Integer getUserid() {
-        return userid;
-    }
 
-    public void setUserid(Integer userid) {
-        this.userid = userid;
-    }
 
     public String getType() {
         return type;
@@ -66,4 +69,5 @@ public class UserLog {
     String type;
     Integer gid;
     String logtime;
+
 }

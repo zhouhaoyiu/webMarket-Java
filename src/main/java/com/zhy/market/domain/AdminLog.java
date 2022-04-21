@@ -41,4 +41,14 @@ public class AdminLog {
     public String adminLogUUid;
     public String adminUUid;
     public String logTime;
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public String info;
 }

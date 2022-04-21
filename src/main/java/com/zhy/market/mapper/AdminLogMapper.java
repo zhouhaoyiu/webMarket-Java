@@ -12,12 +12,12 @@ import java.util.List;
 @Repository
 public interface AdminLogMapper {
 
-    @Insert("insert into adminLog(adminLogUUid, adminUUid, logTime )values ( #{adminLogUUid}, #{adminUUid}, #{logTine}) ")
-    Integer addAdminLog(@Param("adminLogUUid") String adminLogUUid, @Param("adminUUid") String adminUUid, @Param("logTime") String logTime);
+    @Insert("insert into adminLog(adminLogUUid, adminUUid, logTime,info )values ( #{adminLogUUid}, #{adminUUid}, #{logTime},#{info}) ")
+    Integer addAdminLog(@Param("adminLogUUid") String adminLogUUid, @Param("adminUUid") String adminUUid, @Param("logTime") String logTime, @Param("info") String info);
 
     @Select("select * from adminLog")
     List<AdminLog> getAllAdminLog();
 
     @Select("select * from adminLog where adminUUid = #{adminUUid}")
-    List<AdminLog> getAdminLogByAdminUUid(@Param("adminUUid")String adminUUid);
+    List<AdminLog> getAdminLogByAdminUUid(@Param("adminUUid") String adminUUid);
 }

@@ -13,6 +13,8 @@ import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
+import static com.zhy.market.controller.utils.getJsonRes;
+
 @RequestMapping("goods")
 @RestController
 public class GoodsController {
@@ -47,7 +49,7 @@ public class GoodsController {
     }
 
     @PostMapping("addGoods")
-    public Object addGoods(@RequestBody Goods good){
+    public Object addGoods(@RequestBody Goods good) {
         Integer result = goodsMapper.addGood(good.getGoodName(), good.getGoodClassification(), good.getGoodPrice(), good.getGoodCount(), good.getGoodImages(), good.getGoodDescribeImages());
         JSONObject json = new JSONObject();
         if (result > 0) {
@@ -81,8 +83,17 @@ public class GoodsController {
         }
         return null;
     }
+
     @GetMapping("getGoodsImages")
-    public File goodsImages(HttpServletRequest request){
+    public File goodsImages(HttpServletRequest request) {
         return null;
+    }
+
+    @GetMapping("addGoodVisitCount")
+    public Object addGoodVisitCount(@RequestParam("goodId") Integer goodId) {
+        Integer res = goodsMapper.addGoodVisible(goodId);
+        if (res > 0) {
+            return getJsonRes(1, "", null);
+        } else return getJsonRes(0, "", null);
     }
 }

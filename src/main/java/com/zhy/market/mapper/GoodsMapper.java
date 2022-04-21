@@ -1,10 +1,7 @@
 package com.zhy.market.mapper;
 
 import com.zhy.market.domain.Goods;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,6 +17,18 @@ public interface GoodsMapper {
     @Select("select * from goods")
     List<Goods> getAllGoods();
 
-    @Delete("")
+    @Delete("delete goods where goodId = #{goodId}")
     Integer deleteGood(Integer goodId);
+
+    @Update("update goods set goodVisitCount = goodVisitCount + 1  where goodId = #{goodId}")
+    Integer addGoodVisible(@Param("goodId") Integer goodId);
+
+    @Update("update goods set goodSellCount = goodSellCount + #{orderGoodsNumber} where goodId = #{goodId}")
+    Integer addGoodSellCount(@Param("goodId") Integer goodId, @Param("orderGoodsNumber") Integer orderGoodsNumber);
+
+    @Update("update goods set goodCount = goodCount -  #{orderGoodsNumber} where goodId = #{goodId}")
+    Integer minusGoodCount(@Param("goodId") Integer goodId, @Param("orderGoodsNumber") Integer orderGoodsNumber);
+
+    @Select("select goodCount from goods where goodId = #{goodId}")
+    Integer getGoodCountById(@Param("goodId") Integer goodId);
 }

@@ -1,6 +1,7 @@
 package com.zhy.market.controller;
 
 import com.zhy.market.domain.UserLog;
+import com.zhy.market.mapper.GoodsMapper;
 import com.zhy.market.mapper.UserLogMapper;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,17 +16,20 @@ import static com.zhy.market.controller.utils.getJsonRes;
 public class UserLogController {
     @Resource
     private UserLogMapper userLogMapper;
+    @Resource
+    private GoodsMapper goodsMapper;
 
     @PostMapping("addUserLog")
     public Object addUserLog(@RequestBody UserLog userLog) {
         String loguuid = String.valueOf(UUID.randomUUID());
-        Integer userid = Integer.valueOf(userLog.getUserid());
+        String useruuid = userLog.getUseruuid();
         String type = userLog.getType();
         Integer gid = userLog.getGid();
         String logtime = userLog.getLogtime();
 
-        Integer res = userLogMapper.addUserLog(loguuid, userid, type, gid, logtime);
+        Integer res = userLogMapper.addUserLog(loguuid, useruuid, type, gid, logtime);
         if (res > 0) {
+            goodsMapper.addGoodVisible(gid);
             return getJsonRes(0, "添加访问日志成功", null);
         }
         return getJsonRes(1, "添加访问日志成失败", null);
@@ -35,7 +39,7 @@ public class UserLogController {
     @GetMapping("getAllUserLog")
     public Object getAllUserLog() {
         List<UserLog> data = userLogMapper.getAllUserLog();
-        return getJsonRes(0, "获取成功", data);
+        return getJsonRes(1, "获取成功", data);
     }
 
 }

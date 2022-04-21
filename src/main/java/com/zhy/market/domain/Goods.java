@@ -63,9 +63,29 @@ public class Goods {
         this.goodDescribeImages = goodDescribeImages;
     }
 
+    public Integer getGoodSellCount() {
+        return goodSellCount;
+    }
+
+    public void setGoodSellCount(Integer goodSellCount) {
+        this.goodSellCount = goodSellCount;
+    }
+
     Integer goodClassification;
     Integer goodPrice;
     Integer goodCount;
+
+    Integer goodSellCount;
+
+    public Integer getGoodVisitCount() {
+        return goodVisitCount;
+    }
+
+    public void setGoodVisitCount(Integer goodVisitCount) {
+        this.goodVisitCount = goodVisitCount;
+    }
+
+    Integer goodVisitCount;
     String goodImages;
     String goodDescribeImages;
 
