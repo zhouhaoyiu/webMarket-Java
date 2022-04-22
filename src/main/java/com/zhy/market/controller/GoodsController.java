@@ -65,9 +65,7 @@ public class GoodsController {
     @GetMapping("getAllGoods")
     public Object getAllGoods() {
         List<Goods> list = goodsMapper.getAllGoods();
-        JSONObject json = new JSONObject();
-        json.put("data", list);
-        return json;
+        return getJsonRes(1,"获得商品成功",list);
     }
 
     @GetMapping("deleteGoodsById")

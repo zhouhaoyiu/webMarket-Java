@@ -51,4 +51,14 @@ public class AdminLog {
     }
 
     public String info;
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String remark;
 }
