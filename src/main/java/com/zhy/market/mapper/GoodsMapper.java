@@ -14,10 +14,10 @@ public interface GoodsMapper {
                     @Param("goodPrice") Integer goodPrice, @Param("goodCount") Integer goodCount,
                     @Param("goodImages") String goodImages, @Param("goodDescribeImages") String goodDescribeImages);
 
-    @Select("select * from goods")
+    @Select("select * from goods where isDeleted = 0")
     List<Goods> getAllGoods();
 
-    @Delete("delete goods where goodId = #{goodId}")
+    @Delete("update goods set isDeleted = 1 where goodId = #{goodId}")
     Integer deleteGood(Integer goodId);
 
     @Update("update goods set goodVisitCount = goodVisitCount + 1  where goodId = #{goodId}")
@@ -29,6 +29,6 @@ public interface GoodsMapper {
     @Update("update goods set goodCount = goodCount -  #{orderGoodsNumber} where goodId = #{goodId}")
     Integer minusGoodCount(@Param("goodId") Integer goodId, @Param("orderGoodsNumber") Integer orderGoodsNumber);
 
-    @Select("select goodCount from goods where goodId = #{goodId}")
+    @Select("select goodCount from goods where goodId = #{goodId} and isDeleted = 0")
     Integer getGoodCountById(@Param("goodId") Integer goodId);
 }

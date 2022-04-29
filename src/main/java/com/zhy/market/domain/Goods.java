@@ -6,6 +6,15 @@ import lombok.Data;
 public class Goods {
     Integer goodId;
     String goodName;
+    Integer goodClassification;
+    Integer goodPrice;
+    Integer goodCount;
+    Integer goodSellCount;
+    Integer goodVisitCount;
+    String goodImages;
+    String goodDescribeImages;
+
+    Short isDeleted;
 
     public Integer getGoodId() {
         return goodId;
@@ -25,6 +34,14 @@ public class Goods {
 
     public Integer getGoodClassification() {
         return goodClassification;
+    }
+
+    public Short getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Short isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public void setGoodClassification(Integer goodClassification) {
@@ -71,11 +88,6 @@ public class Goods {
         this.goodSellCount = goodSellCount;
     }
 
-    Integer goodClassification;
-    Integer goodPrice;
-    Integer goodCount;
-
-    Integer goodSellCount;
 
     public Integer getGoodVisitCount() {
         return goodVisitCount;
@@ -85,8 +97,5 @@ public class Goods {
         this.goodVisitCount = goodVisitCount;
     }
 
-    Integer goodVisitCount;
-    String goodImages;
-    String goodDescribeImages;
 
 }
