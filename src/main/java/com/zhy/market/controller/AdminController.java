@@ -106,7 +106,7 @@ public class AdminController {
         String pin = userRegisInfo.pin;
         String userName = userRegisInfo.userName;
 
-        if (!Objects.equals(pin, "574601**")) {
+        if (!Objects.equals(pin, "574601**")) { //pin
             JSONObject json = new JSONObject();
             json.put("code", "1");
             json.put("msg", "pin码错误");

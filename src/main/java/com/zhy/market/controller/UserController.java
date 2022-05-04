@@ -25,7 +25,7 @@ public class UserController {
 
         List<UserInfo> list = userMapper.userLogin(username, password);
         if (list.isEmpty()) {
-            return getJsonRes(1, "登录失败", null);
+            return getJsonRes(1, "登录失败,用户名或密码错误", null);
         }
         return getJsonRes(0, "登录成功", list);
 
